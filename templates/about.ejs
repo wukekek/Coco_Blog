@@ -10,7 +10,7 @@
       <!-- 核心身份卡片 -->
       <article class="post-card about-hero">
         <div class="about-avatar-large">
-          <img src="<%= locals.site ? locals.site.avatar : '' %>" alt="头像">
+          <img src="<%= (locals.base || '') + '/' + (locals.site ? locals.site.avatar : '').replace(/^\//, '') %>" alt="头像">
         </div>
         <div class="about-info">
           <h2><%= locals.site ? locals.site.author : '' %></h2>
