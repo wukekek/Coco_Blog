@@ -3,7 +3,7 @@
 <!-- 隐藏的导航栏占位 -->
 <header class="site-header" style="display: none;">
   <div class="header-inner">
-    <a href="<%= locals.base || '/' %>" class="site-logo"><span class="logo-text"><%= locals.site ? locals.site.title : '' %></span></a>
+    <a href="<%= locals.base ? locals.base + '/' : '/' %>" class="site-logo"><span class="logo-text"><%= locals.site ? locals.site.title : '' %></span></a>
   </div>
 </header>
 
