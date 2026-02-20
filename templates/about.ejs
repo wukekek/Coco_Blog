@@ -1,0 +1,116 @@
+<%- include('partials/head') %>
+
+<%- include('partials/header') %>
+
+<main class="main-content">
+  <div class="content-wrapper single-column">
+    <div class="posts-section full-width">
+      <h1 class="page-title">关于我</h1>
+
+      <!-- 核心身份卡片 -->
+      <article class="post-card about-hero">
+        <div class="about-avatar-large">
+          <img src="<%= locals.site ? locals.site.avatar : '' %>" alt="头像">
+        </div>
+        <div class="about-info">
+          <h2><%= locals.site ? locals.site.author : '' %></h2>
+          <p class="about-role"><%= locals.site ? locals.site.role : '' %></p>
+          <p class="about-motto"><%= locals.site ? locals.site.motto : '' %></p>
+        </div>
+      </article>
+
+      <!-- 技术栈 -->
+      <article class="post-card">
+        <h2 class="section-title">技术栈</h2>
+        <div class="skill-cards">
+          <div class="skill-card">
+            <h3>MCU 开发</h3>
+            <ul>
+              <li>STM32 寄存器级开发</li>
+              <li>GD32 国产替代方案</li>
+              <li>Arm Cortex-M 内核</li>
+            </ul>
+          </div>
+          <div class="skill-card">
+            <h3>工具链</h3>
+            <ul>
+              <li>Arm GNU Toolchain</li>
+              <li>Keil MDK / STM32CubeIDE</li>
+              <li>OpenOCD 调试</li>
+            </ul>
+          </div>
+          <div class="skill-card">
+            <h3>软件工程</h3>
+            <ul>
+              <li>Node.js 自研 SSG 引擎</li>
+              <li>MCP (Model Context Protocol)</li>
+              <li>静态博客生成器</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- 项目经历 -->
+      <article class="post-card">
+        <h2 class="section-title">项目经历</h2>
+        <div class="project-cards">
+          <div class="project-card">
+            <div class="project-header">
+              <h3>自研博客生成器</h3>
+              <span class="project-status">SSG</span>
+            </div>
+            <p class="project-desc">使用 Node.js + EJS 开发的静态博客生成引擎，支持 Markdown 文章、代码高亮、Mermaid 图表、KaTeX 数学公式。</p>
+            <div class="project-tags">
+              <span class="tag">Node.js</span>
+              <span class="tag">EJS</span>
+              <span class="tag">Markdown</span>
+              <span class="tag">Mermaid</span>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-header">
+              <h3>MCP 宿主机开发</h3>
+              <span class="project-status">AI</span>
+            </div>
+            <p class="project-desc">基于 Model Context Protocol 的嵌入式设备通信框架，实现主机与 MCU 的高效数据交互。</p>
+            <div class="project-tags">
+              <span class="tag">MCP</span>
+              <span class="tag">嵌入式</span>
+              <span class="tag">通信协议</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 实验室装备 -->
+      <article class="post-card">
+        <h2 class="section-title">实验室装备</h2>
+        <div class="gear-grid">
+          <div class="gear-item">
+            <span class="gear-icon">💻</span>
+            <h3>主力机美化</h3>
+            <p>Windows Terminal Acrylic 毛玻璃效果</p>
+          </div>
+          <div class="gear-item">
+            <span class="gear-icon">🔧</span>
+            <h3>MCU 系列</h3>
+            <p>STM32 / GD32 全系列</p>
+          </div>
+          <div class="gear-item">
+            <span class="gear-icon">📐</span>
+            <h3>开发工具</h3>
+            <p>J-Link / ST-Link 调试器</p>
+          </div>
+          <div class="gear-item">
+            <span class="gear-icon">📊</span>
+            <h3>示波器</h3>
+            <p>Siglent SDS1104X</p>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</main>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,82 @@
+<%- include('partials/head') %>
+
+<!-- 隐藏的导航栏占位 -->
+<header class="site-header" style="display: none;">
+  <div class="header-inner">
+    <a href="/" class="site-logo"><span class="logo-text"><%= locals.site ? locals.site.title : '' %></span></a>
+  </div>
+</header>
+
+<main class="main-content post-page">
+  <div class="content-wrapper">
+    <!-- 目录侧边栏（左侧） -->
+    <aside class="post-toc-sidebar">
+      <nav class="toc-container">
+        <h3 class="toc-title">目录</h3>
+        <ul class="toc-list">
+          <% if (locals.post && locals.post.toc && locals.post.toc.length > 0) { %>
+            <% locals.post.toc.filter(item => item.level <= 2).forEach(item => { %>
+              <li class="toc-level-<%= item.level %>">
+                <a href="#<%= item.slug %>" class="toc-link"><%= item.text %></a>
+              </li>
+            <% }); %>
+          <% } %>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- 文章内容（中间） -->
+    <div class="post-section">
+      <article class="post-detail">
+        <!-- 文章头部 -->
+        <header class="post-header">
+          <h1 class="post-title"><%= locals.post ? locals.post.title : '' %></h1>
+
+          <div class="post-meta">
+            <time class="post-date">📅 <%= locals.post ? _.formatDate(locals.post.date) : '' %></time>
+
+            <div class="post-categories">
+              <% (locals.post ? locals.post.categories : []).forEach(cat => { %>
+                <a href="/categories/<%= _.slugify(cat) %>.html" class="category-tag"><%= cat %></a>
+              <% }); %>
+            </div>
+          </div>
+
+          <div class="post-tags">
+            <% (locals.post ? locals.post.tags : []).forEach(tag => { %>
+              <a href="/tags/<%= _.slugify(tag) %>.html" class="tag"><%= tag %></a>
+            <% }); %>
+          </div>
+        </header>
+
+        <!-- 文章正文 -->
+        <div class="post-content">
+          <%- locals.post ? locals.post.content : '' %>
+        </div>
+
+        <!-- 文章底部 -->
+        <footer class="post-footer-detail">
+        </footer>
+      </article>
+
+      <!-- 相关文章 -->
+      <% if (locals.relatedPosts && locals.relatedPosts.length > 0) { %>
+        <section class="related-posts">
+          <h3>相关文章</h3>
+          <div class="related-list">
+            <% locals.relatedPosts.forEach(related => { %>
+              <article class="related-card">
+                <h4>
+                  <a href="/posts/<%= related.slug %>.html"><%= related.title %></a>
+                </h4>
+                <time><%= _.formatDate(related.date) %></time>
+              </article>
+            <% }); %>
+          </div>
+        </section>
+      <% } %>
+    </div>
+  </div>
+</main>
+
+<%- include('partials/footer') %>

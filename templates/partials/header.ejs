@@ -1,0 +1,39 @@
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="site-logo">
+      <span class="logo-icon">⚡</span>
+      <span class="logo-text"><%= locals.site ? locals.site.title : '' %></span>
+    </a>
+
+    <nav class="site-nav">
+      <a href="/" class="nav-link">
+        <span class="nav-icon">🏠</span>首页
+      </a>
+      <a href="/categories/" class="nav-link">
+        <span class="nav-icon">📂</span>分类
+      </a>
+      <a href="/tags/" class="nav-link">
+        <span class="nav-icon">🏷️</span>标签
+      </a>
+      <a href="/about.html" class="nav-link">
+        <span class="nav-icon">👤</span>关于
+      </a>
+
+      <!-- 搜索框 -->
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" class="search-input" placeholder="搜索文章...">
+        <div class="search-results" id="searchResults"></div>
+      </div>
+
+      <!-- 主题切换按钮 -->
+      <button class="theme-toggle" id="themeToggle" title="切换主题">
+        <span class="theme-icon">🌙</span>
+      </button>
+    </nav>
+
+    <button class="mobile-menu-btn" onclick="document.querySelector('.site-nav').classList.toggle('active')">
+      ☰
+    </button>
+  </div>
+</header>

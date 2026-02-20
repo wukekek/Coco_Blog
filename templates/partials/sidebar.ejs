@@ -1,0 +1,65 @@
+<aside class="sidebar">
+  <!-- 大头照个人卡片 -->
+  <div class="widget avatar-widget">
+    <div class="avatar-container">
+      <img src="<%= locals.site ? locals.site.avatar : '' %>" alt="头像" class="avatar-img">
+      <div class="avatar-ring"></div>
+    </div>
+    <h3 class="avatar-name"><%= locals.site ? locals.site.author : '' %></h3>
+    <p class="avatar-motto"><%= locals.site ? locals.site.motto : '' %></p>
+    <div class="social-links">
+      <a href="<%= locals.site && locals.site.social ? locals.site.social.github : 'https://github.com' %>" class="social-icon" title="GitHub" target="_blank">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+        </svg>
+      </a>
+      <a href="mailto:<%= locals.site ? locals.site.email : '' %>" class="social-icon" title="Email">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+          <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+        </svg>
+      </a>
+      <a href="<%= locals.site && locals.site.social ? locals.site.social.bilibili : 'https://www.bilibili.com' %>" class="social-icon" title="B站" target="_blank">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+          <path d="M17.09 4.56c-.7-1.03-1.5-1.99-2.4-2.85-.35-.34-.94-.02-.84.46.19.94.39 2.18.39 2.18 0 .83-.67 1.5-1.5 1.5s-1.5-.67-1.5-1.5c0-1.03.2-2.17.39-2.83.1-.47-.5-.79-.84-.45-1.51 1.47-2.75 3.08-3.62 4.78-.54 1.07-.86 2.21-.86 3.45 0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5c0-1.64-.62-3.15-1.65-4.31zm-3.91 8.94c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm5.5-1.5c0 .83-.67 1.5-1.5 1.5s-1.5-.67-1.5-1.5.67-1.5 1.5-1.5 1.5.67 1.5 1.5z"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- 分类列表 -->
+  <div class="widget categories-widget">
+    <h3 class="widget-title">分类</h3>
+    <ul class="category-list">
+      <% Object.entries(locals.categories || {}).sort((a, b) => b[1].length - a[1].length).forEach(([cat, posts]) => { %>
+        <li>
+          <a href="/categories/<%= _.slugify(cat) %>.html">
+            <span class="cat-name">📁 <%= cat %></span>
+            <span class="cat-count"><%= posts.length %></span>
+          </a>
+        </li>
+      <% }); %>
+    </ul>
+  </div>
+
+  <!-- 标签云 -->
+  <div class="widget tags-widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="tag-cloud">
+      <% Object.keys(locals.tags || {}).forEach(tag => { %>
+        <a href="/tags/<%= _.slugify(tag) %>.html" class="tag">🏷️ <%= tag %></a>
+      <% }); %>
+    </div>
+  </div>
+
+  <!-- 近期文章 -->
+  <div class="widget recent-widget">
+    <h3 class="widget-title">近期文章</h3>
+    <ul class="recent-list">
+      <% (locals.posts || []).slice(0, 5).forEach(post => { %>
+        <li>
+          <a href="/posts/<%= post.slug %>.html">📄 <%= post.title %></a>
+        </li>
+      <% }); %>
+    </ul>
+  </div>
+</aside>

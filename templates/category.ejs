@@ -1,0 +1,104 @@
+<%- include('partials/head') %>
+
+<%- include('partials/header') %>
+
+<main class="main-content home-page">
+  <div class="content-wrapper">
+    <!-- 侧边栏（左侧） -->
+    <%- include('partials/sidebar') %>
+
+    <!-- 分类/标签文章列表（中间） -->
+    <div class="posts-section">
+      <h1 class="page-title">
+        <% if (locals.type === 'category') { %>
+          分类: <span class="highlight"><%= locals.category %></span>
+        <% } else { %>
+          标签: <span class="highlight"><%= locals.tag %></span>
+        <% } %>
+        <small>(共 <%= locals.posts ? locals.posts.length : 0 %> 篇)</small>
+      </h1>
+
+      <div class="posts-list">
+        <% (locals.posts || []).forEach(post => { %>
+          <article class="post-card">
+            <div class="post-meta">
+              <time class="post-date"><%= _.formatDate(post.date) %></time>
+              <div class="post-categories">
+                <% (post.categories || []).forEach(cat => { %>
+                  <a href="/categories/<%= _.slugify(cat) %>.html" class="category-tag"><%= cat %></a>
+                <% }); %>
+              </div>
+            </div>
+
+            <h2 class="post-title">
+              <a href="/posts/<%= post.slug %>.html"><%= post.title %></a>
+            </h2>
+
+            <p class="post-excerpt"><%= post.excerpt %></p>
+
+            <div class="post-footer">
+              <div class="post-tags">
+                <% (post.tags || []).forEach(tag => { %>
+                  <a href="/tags/<%= _.slugify(tag) %>.html" class="tag"><%= tag %></a>
+                <% }); %>
+              </div>
+              <a href="/posts/<%= post.slug %>.html" class="read-more">阅读全文 →</a>
+            </div>
+          </article>
+        <% }); %>
+      </div>
+
+      <div class="back-link">
+        <a href="/">← 返回首页</a>
+      </div>
+    </div>
+
+    <!-- 右侧挂件 -->
+    <aside class="home-right-sidebar">
+      <!-- 站点统计 -->
+      <div class="widget stats-widget">
+        <h3 class="widget-title">站点统计</h3>
+        <div class="stats-list">
+          <div class="stats-item">
+            <span class="stats-icon">📄</span>
+            <span class="stats-label">文章</span>
+            <span class="stats-value"><%= locals.stats ? locals.stats.totalPosts : 0 %></span>
+          </div>
+          <div class="stats-item">
+            <span class="stats-icon">🏷️</span>
+            <span class="stats-label">标签</span>
+            <span class="stats-value"><%= locals.stats ? locals.stats.totalTags : 0 %></span>
+          </div>
+          <div class="stats-item">
+            <span class="stats-icon">📁</span>
+            <span class="stats-label">分类</span>
+            <span class="stats-value"><%= locals.stats ? locals.stats.totalCategories : 0 %></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 日历 -->
+      <div class="widget calendar-widget">
+        <h3 class="widget-title">日历</h3>
+        <div class="calendar-container">
+          <div class="calendar-header">
+            <span class="calendar-year"><%= locals.currentDate ? locals.currentDate.year : new Date().getFullYear() %></span>
+            <span class="calendar-month"><%= locals.currentDate ? locals.currentDate.monthName : '' %></span>
+          </div>
+          <div class="calendar-weekdays">
+            <span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
+          </div>
+          <div class="calendar-days">
+            <% if (locals.currentDate && locals.currentDate.days) { %>
+              <% locals.currentDate.days.forEach(function(day) { %>
+                <span class="<%= day.isToday ? 'today' : '' %>"><%= day.date %></span>
+              <% }); %>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<%- include('partials/footer') %>
