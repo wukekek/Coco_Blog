@@ -9,7 +9,8 @@ module.exports = {
     motto: '以程序为脉，以硬件为骨，记录真实的技术之路',
     github: 'https://github.com/wukekek',
     email: 'your@email.com',
-    url: 'https://yourusername.github.io',
+    url: 'https://wukekek.github.io',
+    base: '/Coco_Blog', // GitHub Pages 子目录
     avatar: '/images/avatar.png', // 头像 URL
     motto: '专注嵌入式技术，分享学习心得', // 个人座右铭
 

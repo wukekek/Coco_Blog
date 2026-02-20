@@ -1,21 +1,21 @@
 <header class="site-header">
   <div class="header-inner">
-    <a href="/" class="site-logo">
+    <a href="<%= locals.base || '/' %>" class="site-logo">
       <span class="logo-icon">⚡</span>
       <span class="logo-text"><%= locals.site ? locals.site.title : '' %></span>
     </a>
 
     <nav class="site-nav">
-      <a href="/" class="nav-link">
+      <a href="<%= locals.base || '/' %>" class="nav-link">
         <span class="nav-icon">🏠</span>首页
       </a>
-      <a href="/categories/" class="nav-link">
+      <a href="<%= locals.base || '/' %>categories/" class="nav-link">
         <span class="nav-icon">📂</span>分类
       </a>
-      <a href="/tags/" class="nav-link">
+      <a href="<%= locals.base || '/' %>tags/" class="nav-link">
         <span class="nav-icon">🏷️</span>标签
       </a>
-      <a href="/about.html" class="nav-link">
+      <a href="<%= locals.base || '/' %>about.html" class="nav-link">
         <span class="nav-icon">👤</span>关于
       </a>
 

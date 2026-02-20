@@ -56,6 +56,17 @@ class BlogBuilder {
     this.categories = {};
     this.tags = {};
     this.basePath = path.resolve(__dirname, '..');
+    // 获取 base 路径，用于 GitHub Pages 子目录部署
+    this.base = config.site.base || '';
+  }
+
+  // 添加 base 前缀的路径 helper
+  p(url) {
+    if (!url) return this.base || '/';
+    if (url.startsWith('http')) return url;
+    if (url.startsWith('//')) return url;
+    const base = this.base || '/';
+    return base + (url.startsWith('/') ? url : '/' + url);
   }
 
   async build() {
@@ -212,6 +223,7 @@ class BlogBuilder {
       tags: this.tags,
       formatDate: this.formatDate,
       config: config,
+      base: this.base,
       stats: {
         totalPosts: this.posts.length,
         totalTags: Object.keys(this.tags).length,
@@ -272,7 +284,7 @@ class BlogBuilder {
     const sidebarHtml = `
   <div class="widget avatar-widget">
     <div class="avatar-container">
-      <img src="${config.site.avatar}" alt="头像" class="avatar-img">
+      <img src="${this.p(config.site.avatar)}" alt="头像" class="avatar-img">
       <div class="avatar-ring"></div>
     </div>
     <h3 class="avatar-name">${config.site.author}</h3>
@@ -282,13 +294,13 @@ class BlogBuilder {
     <h3 class="widget-title">分类</h3>
     <ul class="category-list">
       ${Object.keys(this.categories).map(cat => `
-      <li><a href="/categories/${this.slugify(cat)}.html"><span class="cat-name">📁 ${cat}</span><span class="cat-count">${this.categories[cat].length}</span></a></li>`).join('')}
+      <li><a href="${this.p('/categories/' + this.slugify(cat) + '.html')}"><span class="cat-name">📁 ${cat}</span><span class="cat-count">${this.categories[cat].length}</span></a></li>`).join('')}
     </ul>
   </div>
   <div class="widget tags-widget">
     <h3 class="widget-title">标签云</h3>
     <div class="tag-cloud">
-      ${Object.keys(this.tags).map(tag => `<a href="/tags/${this.slugify(tag)}.html" class="tag">🏷️ ${tag}</a>`).join('')}
+      ${Object.keys(this.tags).map(tag => `<a href="${this.p('/tags/' + this.slugify(tag) + '.html')}" class="tag">🏷️ ${tag}</a>`).join('')}
     </div>
   </div>`;
 
@@ -322,12 +334,12 @@ class BlogBuilder {
     // 头部导航（带搜索和主题切换）
     const headerHtml = `<header class="site-header">
   <div class="header-inner">
-    <a href="/" class="site-logo"><span class="logo-icon">⚡</span><span class="logo-text">${config.site.title}</span></a>
+    <a href="${this.p('/')}" class="site-logo"><span class="logo-icon">⚡</span><span class="logo-text">${config.site.title}</span></a>
     <nav class="site-nav">
-      <a href="/" class="nav-link"><span class="nav-icon">🏠</span>首页</a>
-      <a href="/categories/" class="nav-link"><span class="nav-icon">📂</span>分类</a>
-      <a href="/tags/" class="nav-link"><span class="nav-icon">🏷️</span>标签</a>
-      <a href="/about.html" class="nav-link"><span class="nav-icon">👤</span>关于</a>
+      <a href="${this.p('/')}" class="nav-link"><span class="nav-icon">🏠</span>首页</a>
+      <a href="${this.p('/categories/')}" class="nav-link"><span class="nav-icon">📂</span>分类</a>
+      <a href="${this.p('/tags/')}" class="nav-link"><span class="nav-icon">🏷️</span>标签</a>
+      <a href="${this.p('/about.html')}" class="nav-link"><span class="nav-icon">👤</span>关于</a>
       <div class="search-box">
         <span class="search-icon">🔍</span>
         <input type="text" id="searchInput" class="search-input" placeholder="搜索文章...">
@@ -360,7 +372,7 @@ class BlogBuilder {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>分类 - ${config.site.title}</title>
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="${this.p('/css/style.css')}">
   <style>span.search-icon,span.theme-icon,span.nav-icon,span.logo-icon{font-family:"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji",sans-serif!important}</style>
   ${searchScript}
 </head>
@@ -373,7 +385,7 @@ class BlogBuilder {
         <div class="posts-section">
           <h1 class="page-title">全部分类</h1>
           <div class="posts-list">
-            ${Object.keys(this.categories).map(cat => `<article class="post-card"><h2 class="post-title"><a href="/categories/${this.slugify(cat)}.html">${cat}</a></h2></article>`).join('')}
+            ${Object.keys(this.categories).map(cat => `<article class="post-card"><h2 class="post-title"><a href="${this.p('/categories/' + this.slugify(cat) + '.html')}">${cat}</a></h2></article>`).join('')}
           </div>
         </div>
         <aside class="home-right-sidebar">${statsHtml}</aside>
@@ -381,7 +393,7 @@ class BlogBuilder {
     </main>
     <footer class="site-footer"><div class="footer-inner"><div class="footer-info"><p>&copy; ${new Date().getFullYear()} ${config.site.title}. All rights reserved.</p></div></div></footer>
   </div>
-  <script src="/js/main.js"></script>
+  <script src="${this.p('/js/main.js')}"></script>
 </body>
 </html>`;
 
@@ -395,7 +407,7 @@ class BlogBuilder {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>标签 - ${config.site.title}</title>
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="${this.p('/css/style.css')}">
   <style>span.search-icon,span.theme-icon,span.nav-icon,span.logo-icon{font-family:"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji",sans-serif!important}</style>
   ${searchScript}
 </head>
@@ -408,7 +420,7 @@ class BlogBuilder {
         <div class="posts-section">
           <h1 class="page-title">全部标签</h1>
           <div class="posts-list">
-            ${Object.keys(this.tags).map(tag => `<article class="post-card"><h2 class="post-title"><a href="/tags/${this.slugify(tag)}.html">${tag}</a></h2></article>`).join('')}
+            ${Object.keys(this.tags).map(tag => `<article class="post-card"><h2 class="post-title"><a href="${this.p('/tags/' + this.slugify(tag) + '.html')}">${tag}</a></h2></article>`).join('')}
           </div>
         </div>
         <aside class="home-right-sidebar">${statsHtml}</aside>
@@ -416,7 +428,7 @@ class BlogBuilder {
     </main>
     <footer class="site-footer"><div class="footer-inner"><div class="footer-info"><p>&copy; ${new Date().getFullYear()} ${config.site.title}. All rights reserved.</p></div></div></footer>
   </div>
-  <script src="/js/main.js"></script>
+  <script src="${this.p('/js/main.js')}"></script>
 </body>
 </html>`;
 

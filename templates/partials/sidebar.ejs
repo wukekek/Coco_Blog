@@ -2,7 +2,7 @@
   <!-- 大头照个人卡片 -->
   <div class="widget avatar-widget">
     <div class="avatar-container">
-      <img src="<%= locals.site ? locals.site.avatar : '' %>" alt="头像" class="avatar-img">
+      <img src="<%= (locals.base || '') + '/' + (locals.site ? locals.site.avatar : '').replace(/^\//, '') %>" alt="头像" class="avatar-img">
       <div class="avatar-ring"></div>
     </div>
     <h3 class="avatar-name"><%= locals.site ? locals.site.author : '' %></h3>
@@ -32,7 +32,7 @@
     <ul class="category-list">
       <% Object.entries(locals.categories || {}).sort((a, b) => b[1].length - a[1].length).forEach(([cat, posts]) => { %>
         <li>
-          <a href="/categories/<%= _.slugify(cat) %>.html">
+          <a href="<%= locals.base || '' %>/categories/<%= _.slugify(cat) %>.html">
             <span class="cat-name">📁 <%= cat %></span>
             <span class="cat-count"><%= posts.length %></span>
           </a>
@@ -46,7 +46,7 @@
     <h3 class="widget-title">标签云</h3>
     <div class="tag-cloud">
       <% Object.keys(locals.tags || {}).forEach(tag => { %>
-        <a href="/tags/<%= _.slugify(tag) %>.html" class="tag">🏷️ <%= tag %></a>
+        <a href="<%= locals.base || '' %>/tags/<%= _.slugify(tag) %>.html" class="tag">🏷️ <%= tag %></a>
       <% }); %>
     </div>
   </div>
@@ -57,7 +57,7 @@
     <ul class="recent-list">
       <% (locals.posts || []).slice(0, 5).forEach(post => { %>
         <li>
-          <a href="/posts/<%= post.slug %>.html">📄 <%= post.title %></a>
+          <a href="<%= locals.base || '' %>/posts/<%= post.slug %>.html">📄 <%= post.title %></a>
         </li>
       <% }); %>
     </ul>

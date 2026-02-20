@@ -25,13 +25,13 @@
               <time class="post-date"><%= _.formatDate(post.date) %></time>
               <div class="post-categories">
                 <% (post.categories || []).forEach(cat => { %>
-                  <a href="/categories/<%= _.slugify(cat) %>.html" class="category-tag"><%= cat %></a>
+                  <a href="<%= locals.base || '' %>/categories/<%= _.slugify(cat) %>.html" class="category-tag"><%= cat %></a>
                 <% }); %>
               </div>
             </div>
 
             <h2 class="post-title">
-              <a href="/posts/<%= post.slug %>.html"><%= post.title %></a>
+              <a href="<%= locals.base || '' %>/posts/<%= post.slug %>.html"><%= post.title %></a>
             </h2>
 
             <p class="post-excerpt"><%= post.excerpt %></p>
@@ -39,17 +39,17 @@
             <div class="post-footer">
               <div class="post-tags">
                 <% (post.tags || []).forEach(tag => { %>
-                  <a href="/tags/<%= _.slugify(tag) %>.html" class="tag"><%= tag %></a>
+                  <a href="<%= locals.base || '' %>/tags/<%= _.slugify(tag) %>.html" class="tag"><%= tag %></a>
                 <% }); %>
               </div>
-              <a href="/posts/<%= post.slug %>.html" class="read-more">阅读全文 →</a>
+              <a href="<%= locals.base || '' %>/posts/<%= post.slug %>.html" class="read-more">阅读全文 →</a>
             </div>
           </article>
         <% }); %>
       </div>
 
       <div class="back-link">
-        <a href="/">← 返回首页</a>
+        <a href="<%= locals.base || '/' %>">← 返回首页</a>
       </div>
     </div>
 
